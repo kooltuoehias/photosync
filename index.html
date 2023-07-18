@@ -1,0 +1,69 @@
+
+<html>
+<style>
+  body {
+    border-radius: 5px;
+    font-size: 35px;
+    font-family:  Garamond, serif;
+    padding: 6px 18px;
+  }
+
+  button{
+    background-color: #04AA6D;
+    border-radius: 1px;
+    font-size: 35px;
+    padding: 3px 9px;
+    height: 25%;
+    width: 100%
+  }
+
+  label {
+    width: 100%;
+    font-size: 70px;
+    display: inline-block;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  input {
+    width: 100%;
+    font-size: 70px;
+    display:none;
+  }
+
+</style>
+<body>
+
+<p>Upload JPEG photos to Cloudflare R2 Bucket</p>
+<br/><br/>
+<script>
+  function logSubmit(event) {
+    for(const fileToBeUploaded of document.getElementById("files").files) {
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", location.protocol + '//' + location.host + "?name=" + fileToBeUploaded.name, true);
+      xhr.setRequestHeader("Content-Type", "multipart/form-data");
+      const formData = new FormData();
+      formData.append("file", fileToBeUploaded);
+      xhr.send(fileToBeUploaded);
+      let li = document.createElement('li');
+      li.innerText = fileToBeUploaded.name + " : " + fileToBeUploaded.size + "kb";
+      document.getElementById("log").appendChild(li);
+    }
+    event.preventDefault();
+  }
+
+  document.addEventListener("DOMContentLoaded", function(event) { 
+    document.getElementById("form").addEventListener("submit", logSubmit);
+  });
+
+</script>  
+<form id="form"  method="post" enctype="multipart/form-data">
+  <label for="files">Select your photos ... <input type="file" id="files" multiple class="hidden"> </label>
+  <br/><br/>
+  <button type="submit">Upload</button>
+</form>
+<br /><br />
+<ul id="log"></ul>
+</body>
+</html>

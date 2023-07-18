@@ -1,0 +1,10 @@
+*.jpeg
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+node_modules/
+
+### VS Code ###
+.vscode/
