@@ -46,9 +46,9 @@
       const formData = new FormData();
       formData.append("file", fileToBeUploaded);
       xhr.send(fileToBeUploaded);
-      let li = document.createElement('li');
-      li.innerText = fileToBeUploaded.name + " : " + fileToBeUploaded.size + "kb";
-      document.getElementById("log").appendChild(li);
+      let th3 = document.createElement('th');
+      th3.innerText = "Sent";
+      document.getElementById(fileToBeUploaded.name).appendChild(th3);
     }
     event.preventDefault();
   }
@@ -57,6 +57,24 @@
     document.getElementById("form").addEventListener("submit", logSubmit);
   });
 
+  function logSelect(event) {
+    for(const fileToBeUploaded of document.getElementById("files").files) {
+      let tr = document.createElement('tr');
+      tr.setAttribute("id", fileToBeUploaded.name);
+      document.getElementById("log").appendChild(tr);
+      let th1 = document.createElement('th');
+      th1.innerText = fileToBeUploaded.name + " : " + fileToBeUploaded.size + "kb";
+      let th2 = document.createElement('th');
+      th2.innerText = "selected";
+      document.getElementById(fileToBeUploaded.name).appendChild(th1);
+      document.getElementById(fileToBeUploaded.name).appendChild(th2);
+      
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function(event) { 
+    document.getElementById("files").addEventListener("input", logSelect);
+  });
 </script>  
 <form id="form"  method="post" enctype="multipart/form-data">
   <label for="files">Select your photos ... <input type="file" id="files" multiple class="hidden"> </label>
@@ -64,6 +82,6 @@
   <button type="submit">Upload</button>
 </form>
 <br /><br />
-<ul id="log"></ul>
+<table id="log"></table>
 </body>
 </html>
