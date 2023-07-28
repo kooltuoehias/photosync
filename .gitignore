@@ -5,6 +5,6 @@
 *.iml
 *.ipr
 node_modules/
-
+.env
 ### VS Code ###
 .vscode/
